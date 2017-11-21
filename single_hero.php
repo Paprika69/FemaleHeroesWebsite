@@ -10,7 +10,7 @@
       <meta name="author" content="">
       <link rel="icon" href="https://getbootstrap.com/docs/3.3/favicon.ico">
 
-      <title>Heroes</title>
+      <title>Hero</title>
 
       <!-- Bootstrap core CSS -->
       <link href="static/css/bootstrap.min.css" rel="stylesheet">
@@ -118,59 +118,36 @@
 
         <!--
         ==================================================
-        Table Section Start
+        Hero Detail Section Start
         ================================================== -->
 
-         <?php
+        <!--Hi, Mitch. Please add your codes below to make the info page detailed and beautiful:-->
+        <?php
+            //Get http request parameters
+            $hero_id = $_GET['hero_id'];
+
             $host= "localhost";
 		    $username = "femmeheroes";
-		    $password = "code_works";
+		    $password = "";
 		    $database = "femmeheroes";
+
 		    //create connection to mysql database
 		    $connection = mysqli_connect($host, $username, $password, $database);
+
             //get results from database
-            $heroes_query = "SELECT heroes.hero_id, heroes.name, heroes.real_name, heroes.height, heroes.weight, heroes.battle_rating
-                               FROM heroes";
-            $result = mysqli_query($connection, $heroes_query);
-            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                $values[] = array(
-                'hero_id' => $row['hero_id'],//This is the key that directs you into each hero's page
-                'name' => $row['name'],
-                'real_name' => $row['real_name'],
-                'height' => $row['height'],
-                'weight' => $row['weight'],
-                'battle_rating' => $row['battle_rating']
-                );
-            }
-         ?>
+            $hero_query = "SELECT heroes.hero_id, heroes.name, heroes.real_name, heroes.image
+                               FROM heroes
+                              WHERE heroes.hero_id = $hero_id";
+            $result = mysqli_query($connection, $hero_query);
+            $row = mysqli_fetch_array($result);
 
-         <table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-         <thead>
-            <tr>
-                <th>Name</th>
-                <th>Real Name</th>
-                <th>Height</th>
-                <th>Weight</th>
-                <th>Battle Rating</th>
+            print "<p>$row[name]</p><br />";
+            print "<div><img src='static/images/$row[image]'></div>";
+        ?>
 
-            </tr>
-         </thead>
-         <?php
-             foreach($values as $v) {
-                 print "
-                 <tr>
-                     <td><a href='single_hero.php?hero_id=$v[hero_id]'>".$v['name']."</a></td>
-                     <td>".$v['real_name']."</td>
-                     <td>".$v['height']."</td>
-                     <td>".$v['weight']."</td>
-                     <td>".$v['battle_rating']."</td>
-                 </tr>
-                 ";
-             }
-             mysqli_close($connection);
-         ?>
 
-         </table>
+
+
 
         <!--==================================================-->
         <!--Footer Section Start-->
@@ -187,22 +164,6 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="static/js/ie10-viewport-bug-workaround.js"></script>
-
-    <!-- for datatable sorting, show entries and search functions -->
-    <script>
-      $(document).ready(function() {
-        $('#table').DataTable({
-          "order": [[ 0, "asc" ]],
-          "iDisplayLength": 20,
-          "columnDefs": [
-              { "width": "15%", "targets": 0 },
-              { "width": "25%", "targets": 1 },
-              { "width": "20%", "targets": 2 },
-              { "width": "20%", "targets": 3 },
-          ]
-        });
-      });
-    </script>
 
   </body>
 </html>
