@@ -116,14 +116,58 @@
         </header>
 
 
-      <div width="90%">
-          <!--<table id="table" class="table-content" cellspacing="0" width="100%">-->
-      <table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 
-      </table>
-      </div>
+         <?php
+            $host= "localhost";
+		    $username = "femmeheroes";
+		    $password = "code_works";
+		    $database = "femmeheroes";
 
+		    //create connection to mysql database
+		    $connection = mysqli_connect($host, $username, $password, $database);
 
+            //get results from database
+            $heroes_query = "SELECT heroes.name, heroes.real_name, heroes.height, heroes.weight, creators.first_name,
+                                    creators.middle_name, creators.last_name, series.title
+                               FROM heroes
+                               LEFT JOIN creators ON heroes.";
+            $result = mysqli_query($connection, $heroes_query);
+
+            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                $values[] = array(
+                'name' => $row['name'],
+                'real_name' => $row['real_name'],
+                'height' => $row['height'],
+                'weight' => $row['weight']
+                );
+            }
+         ?>
+
+         <table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+         <thead>
+            <tr>
+                <th>Name</th>
+                <th>Real Name</th>
+                <th>Height</th>
+                <th>Weight</th>
+
+            </tr>
+         </thead>
+         <?php
+             foreach($values as $v) {
+                 print '
+                 <tr>
+                     <td>'.$v['name'].'</td>
+                     <td>'.$v['real_name'].'</td>
+                     <td>'.$v['height'].'</td>
+                     <td>'.$v['weight'].'</td>
+                 </tr>
+                 ';
+             }
+             mysqli_close($connection);
+         ?>
+
+         </table>
 
         <!--==================================================-->
         <!--Footer Section Start-->
@@ -140,6 +184,16 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="static/js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- for datatable sorting, show entries and search functions -->
+    <script>
+      $(document).ready(function() {
+        $('#table').DataTable({
+          "order": [[ 0, "asc" ]],
+          "iDisplayLength": 20
+        });
+      });
+    </script>
 
   </body>
 </html>
