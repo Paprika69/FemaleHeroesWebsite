@@ -120,7 +120,7 @@
          <?php
             $host= "localhost";
 		    $username = "femmeheroes";
-		    $password = "code_works";
+		    $password = "";
 		    $database = "femmeheroes";
 
 		    //create connection to mysql database
