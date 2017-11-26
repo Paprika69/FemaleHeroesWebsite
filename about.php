@@ -183,9 +183,9 @@
             <div class="col-md-4">
               <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".7s">
                 <div class="team-img">
-                  <img src="static/images/michelle.jpg" class="img-responsive" alt="">
+                  <img src="static/images/WonderWoman.png" class="img-responsive" alt="">
                 </div>
-                <h3 class="team_name">Michelle Covington</h3>
+                <h3 class="team_name">Elle Covington</h3>
                 <p class="team_designation">...</p>
               </div>
             </div>
@@ -195,7 +195,7 @@
             <div class="col-md-4">
               <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".9s">
                 <div class="team-img">
-                  <img src="static/images/rajashree.jpg" class="img-responsive" alt="">
+                  <img src="static/images/KamalaKhan.png" class="img-responsive" alt="">
                 </div>
                 <h3 class="team_name">Rajashree Kamat</h3>
                 <p class="team_designation">...</p>
