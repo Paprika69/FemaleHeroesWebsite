@@ -91,7 +91,7 @@
                     <!-- logo -->
                     <div class="navbar-brand">
                         <a href="index.php" >
-                            <img src="static/images/logo.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;ß" alt="">
+                            <img src="static/images/codeworkslogo3.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;ß" alt="">
                         </a>
                     </div>
                     <!-- /logo -->
@@ -123,7 +123,61 @@
       </table>
       </div>
 
+<!--
+        ==================================================
+        Table Section Start
+        ================================================== -->
 
+         <?php
+            $host= "localhost";
+		    $username = "femmeheroes";
+		    $password = "code_works";
+		    $database = "femmeheroes";
+		    //create connection to mysql database
+		    $connection = mysqli_connect($host, $username, $password, $database);
+            //get results from database
+            $creator_query = "SELECT creators.creator_id, creators.first_name, creators.middle_name, creators.last_name, creators.suffix, creators.image
+                               FROM creators";
+            $result = mysqli_query($connection, $creator_query);
+            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                $values[] = array(
+                'creator_id' => $row['creator_id'],//This is the key that directs you into each hero's page
+                'first_name' => $row['first_name'],
+                'middle_name' => $row['middle_name'],
+                'last_name' => $row['last_name'],
+                'suffix' => $row['suffix'],
+                'image' => $row['image']
+                );
+            }
+         ?>
+
+         <table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+         <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+                <th>Suffix</th>
+                <th>Image</th>
+
+            </tr>
+         </thead>
+         <?php
+             foreach($values as $v) {
+                 print "
+                 <tr>
+                     <td>".$v['first_name']."</td>
+                     <td>".$v['middle_name']."</td>
+                     <td>".$v['last_name']."</td>
+                     <td>".$v['suffix']."</td>
+                     <td>".$v['image']."</td>
+                 </tr>
+                 ";
+             }
+             mysqli_close($connection);
+         ?>
+
+         </table>
 
         <!--==================================================-->
         <!--Footer Section Start-->
@@ -131,7 +185,7 @@
     <footer id="footer">
         <div class="container">
             <div class="col-md-6">
-            <p class="copyright">Copyright: <span>2017</span> . Design and Developed by Code Works</p>
+            <p class="copyright">Copyright: <span>2017</span> . Designed and Developed by Code Works</p>
             </div>
         </div>
     </footer> <!-- /#footer -->
