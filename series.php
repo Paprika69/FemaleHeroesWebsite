@@ -123,7 +123,58 @@
       </table>
       </div>
 
+<!--
+        ==================================================
+        Table Section Start
+        ================================================== -->
 
+         <?php
+            $host= "localhost";
+		    $username = "femmeheroes";
+		    $password = "code_works";
+		    $database = "femmeheroes";
+		    //create connection to mysql database
+		    $connection = mysqli_connect($host, $username, $password, $database);
+            //get results from database
+            $series_query = "SELECT series.series_id, series.series_title, series.description, series.start_date, series.end_date
+                               FROM series";
+            $result = mysqli_query($connection, $series_query);
+            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                $values[] = array(
+                'series_id' => $row['series_id'],//This is the primary key
+                'series_title' => $row['series_title'],
+                'description' => $row['description'],
+                'start_date' => $row['start_date'],
+                'end_date' => $row['end_date']
+                );
+            }
+         ?>
+
+         <table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+         <thead>
+            <tr>
+                <th>Series Title</th>
+                <th>Desctiption</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+         </thead>
+           
+         <?php
+             foreach($values as $v) {
+                 print "
+                 <tr>
+                     <td>".$v['series_title']."</td>
+                     <td>".$v['description']."</td>
+                     <td>".$v['start_date']."</td>
+                     <td>".$v['end_date']."</td>
+                 </tr>
+                 ";
+             }
+             mysqli_close($connection);
+         ?>
+
+         </table>
 
         <!--==================================================-->
         <!--Footer Section Start-->
