@@ -91,7 +91,7 @@
                     <!-- logo -->
                     <div class="navbar-brand">
                         <a href="index.php" >
-                            <img src="static/images/codeworkslogo3.png" style="height:200px;width:513px; position:relative; top:-15px; left:0px;ß" alt="">
+                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;" alt="">
                         </a>
                     </div>
                     <!-- /logo -->

@@ -72,8 +72,8 @@
 
                     <!-- logo -->
                     <div class="navbar-brand">
-                        <a href="index" >
-                            <img src="static/images/logo.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;ß" alt="">
+                        <a href="index.php" >
+                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;" alt="">
                         </a>
                     </div>
                     <!-- /logo -->
@@ -162,7 +162,7 @@
                 <div class="col-md-4">
                   <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".3s">
                     <div class="team-img">
-                      <img src="static/images/joy.png" class="img-responsive" alt="">
+                      <img src="static/images/joy.jpg" class="img-responsive" alt="">
                     </div>
                 <h3 class="team_name">Qiuying Jiang</h3>
                 <p class="team_designation">Front-end Development</p>

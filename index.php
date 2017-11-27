@@ -73,8 +73,8 @@
 
                     <!-- logo -->
                     <div class="navbar-brand">
-                        <a href="inde.php" >
-                            <img src="static/images/logo.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;" alt="">
+                        <a href="index.php" >
+                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;" alt="">
                         </a>
                     </div>
                     <!-- /logo -->

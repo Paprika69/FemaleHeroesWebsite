@@ -91,7 +91,7 @@
                     <!-- logo -->
                     <div class="navbar-brand">
                         <a href="index.php" >
-                            <img src="static/images/codeworkslogo3.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;ß" alt="">
+                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;" alt="">
                         </a>
                     </div>
                     <!-- /logo -->
@@ -115,14 +115,6 @@
             </div>
         </header>
 
-
-      <div width="90%">
-          <!--<table id="table" class="table-content" cellspacing="0" width="100%">-->
-      <table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-
-      </table>
-      </div>
-
 <!--
         ==================================================
         Table Section Start
@@ -136,7 +128,7 @@
 		    //create connection to mysql database
 		    $connection = mysqli_connect($host, $username, $password, $database);
             //get results from database
-            $creator_query = "SELECT creators.creator_id, creators.first_name, creators.middle_name, creators.last_name, creators.suffix, creators.image
+            $creator_query = "SELECT creators.creator_id, creators.first_name, creators.middle_name, creators.last_name, creators.suffix
                                FROM creators";
             $result = mysqli_query($connection, $creator_query);
             while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -145,8 +137,7 @@
                 'first_name' => $row['first_name'],
                 'middle_name' => $row['middle_name'],
                 'last_name' => $row['last_name'],
-                'suffix' => $row['suffix'],
-                'image' => $row['image']
+                'suffix' => $row['suffix']
                 );
             }
          ?>
@@ -158,8 +149,6 @@
                 <th>Middle Name</th>
                 <th>Last Name</th>
                 <th>Suffix</th>
-                <th>Image</th>
-
             </tr>
          </thead>
          <?php
@@ -170,7 +159,6 @@
                      <td>".$v['middle_name']."</td>
                      <td>".$v['last_name']."</td>
                      <td>".$v['suffix']."</td>
-                     <td>".$v['image']."</td>
                  </tr>
                  ";
              }
@@ -194,6 +182,22 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="static/js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- for datatable sorting, show entries and search functions -->
+    <script>
+      $(document).ready(function() {
+        $('#table').DataTable({
+          "order": [[ 0, "asc" ]],
+          "iDisplayLength": 20,
+          "columnDefs": [
+              { "width": "25%", "targets": 0 },
+              { "width": "25%", "targets": 1 },
+              { "width": "25%", "targets": 2 },
+              { "width": "25%", "targets": 3 },
+          ]
+        });
+      });
+    </script>
 
   </body>
 </html>

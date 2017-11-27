@@ -91,7 +91,7 @@
                     <!-- logo -->
                     <div class="navbar-brand">
                         <a href="index.php" >
-                            <img src="static/images/logo.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;ß" alt="">
+                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;" alt="">
                         </a>
                     </div>
                     <!-- /logo -->
@@ -114,14 +114,6 @@
                 <!-- /main nav -->
             </div>
         </header>
-
-
-      <div width="90%">
-          <!--<table id="table" class="table-content" cellspacing="0" width="100%">-->
-      <table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-
-      </table>
-      </div>
 
 <!--
         ==================================================
@@ -192,5 +184,20 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="static/js/ie10-viewport-bug-workaround.js"></script>
 
+    <!-- for datatable sorting, show entries and search functions -->
+    <script>
+      $(document).ready(function() {
+        $('#table').DataTable({
+          "order": [[ 0, "asc" ]],
+          "iDisplayLength": 20,
+          "columnDefs": [
+              { "width": "10%", "targets": 0 },
+              { "width": "80%", "targets": 1 },
+              { "width": "5%", "targets": 2 },
+              { "width": "5%", "targets": 3 },
+          ]
+        });
+      });
+    </script>
   </body>
 </html>
