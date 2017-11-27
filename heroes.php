@@ -91,7 +91,7 @@
                     <!-- logo -->
                     <div class="navbar-brand">
                         <a href="index.php" >
-                            <img src="static/images/logo.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;ß" alt="">
+                            <img src="static/images/codeworkslogo3.png" style="height:200px;width:513px; position:relative; top:-15px; left:0px;ß" alt="">
                         </a>
                     </div>
                     <!-- /logo -->
@@ -178,7 +178,7 @@
     <footer id="footer">
         <div class="container">
             <div class="col-md-6">
-            <p class="copyright">Copyright: <span>2017</span> . Design and Developed by Code Works</p>
+            <p class="copyright">Copyright: <span>2017</span> . Designed and Developed by Code Works</p>
             </div>
         </div>
     </footer> <!-- /#footer -->
