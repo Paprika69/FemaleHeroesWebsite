@@ -143,12 +143,12 @@
             $row = mysqli_fetch_array($result);
 	  
             print "<div><img src='static/images/$row[image]'></div></ b>";
-            print "<p>Name: $row[name]</p>";
-            print "<p>Real Name: $row[real_name]</p>";
-            print "<p>Height: $row[height]  Weight: $row[weight]</p>";
-            print "<p>Battle Rating: $row[battle_rating]</p>";
-            print "<p>Powers & Abilities:</p> <p>$row[powers_abilities]</p>";
-            print "<p>Description:</p> <p>$row[description]</p>";
+            print "<h3>Name:</h3></ b> $row[name]";
+            print "<h3>Real Name:</h3></ b> $row[real_name]";
+            print "<h3>Height:</h3></ b> $row[height] <h3>Weight:</h3></ b> $row[weight]";
+            print "<h3>Battle Rating:</h3></ b> $row[battle_rating] out of 7";
+            print "<h3>Powers & Abilities:</h3></ b> <p>$row[powers_abilities]";
+            print "<h3>Description:</h3></ b> $row[description]";
         ?>
 
 
