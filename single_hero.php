@@ -135,14 +135,20 @@
 		    $connection = mysqli_connect($host, $username, $password, $database);
 
             //get results from database
-            $hero_query = "SELECT heroes.hero_id, heroes.name, heroes.real_name, heroes.image
+            $hero_query = "SELECT heroes.hero_id, heroes.name, heroes.real_name, heroes.image, heroes.height, 
+	    heroes.weight, heroes.powers_abilities, heroes.battle_rating, heroes.description
                                FROM heroes
                               WHERE heroes.hero_id = $hero_id";
             $result = mysqli_query($connection, $hero_query);
             $row = mysqli_fetch_array($result);
-
-            print "<p>$row[name]</p><br />";
-            print "<div><img src='static/images/$row[image]'></div>";
+	  
+            print "<div><img src='static/images/$row[image]'></div></ b>";
+            print "<p>Name: $row[name]</p>";
+            print "<p>Real Name: $row[real_name]</p>";
+            print "<p>Height: $row[height]  Weight: $row[weight]</p>";
+            print "<p>Battle Rating: $row[battle_rating]</p>";
+            print "<p>Powers & Abilities:</p> <p>$row[powers_abilities]</p>";
+            print "<p>Description:</p> <p>$row[description]</p>";
         ?>
 
 
