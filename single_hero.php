@@ -125,6 +125,8 @@
         <?php
             //Get http request parameters
             $hero_id = $_GET['hero_id'];
+	    $creator_id = $_GET['creator_id'];
+            $hero_creator_id = $_GET['hero_creator_id'];
 
             $host= "localhost";
 		    $username = "femmeheroes";
@@ -135,20 +137,22 @@
 		    $connection = mysqli_connect($host, $username, $password, $database);
 
             //get results from database
-            $hero_query = "SELECT heroes.hero_id, heroes.name, heroes.real_name, heroes.image, heroes.height, 
-	    heroes.weight, heroes.powers_abilities, heroes.battle_rating, heroes.description
-                               FROM heroes
-                              WHERE heroes.hero_id = $hero_id";
+            $hero_query = "SELECT heroes.hero_id, heroes.name, heroes.real_name, heroes.image, heroes.height, heroes.weight, heroes.powers_abilities, heroes.battle_rating, heroes.description, creators.creator_id, creators.first_name, creators.middle_name, creators.last_name, creators.suffix, creators.image
+                               FROM heroes, creators, hero_creator_jnct
+                               WHERE heroes.hero_id = $hero_id, creators.creator_id = $creator_id, hero_creator_jnct.hero_creator_id = $hero_creator_id
+                              AND heroes.hero_id = hero_creator_jnct.hero_id
+                              AND hero_creator_jnct.creator_id = creators.creator_id;"
+
             $result = mysqli_query($connection, $hero_query);
             $row = mysqli_fetch_array($result);
-	  
+
             print "<div><img src='static/images/$row[image]'></div></ b>";
-            print "<p>Name: $row[name]</p>";
-            print "<p>Real Name: $row[real_name]</p>";
-            print "<p>Height: $row[height]  Weight: $row[weight]</p>";
-            print "<p>Battle Rating: $row[battle_rating]</p>";
-            print "<p>Powers & Abilities:</p> <p>$row[powers_abilities]</p>";
-            print "<p>Description:</p> <p>$row[description]</p>";
+            print "<h3>Name:</h3></ b> $row[name]";
+            print "<h3>Real Name:</h3></ b> $row[real_name]";
+            print "<h3>Height:</h3></ b> $row[height] <h3>Weight:</h3></ b> $row[weight]";
+            print "<h3>Battle Rating:</h3></ b> $row[battle_rating] out of 7";
+            print "<h3>Powers & Abilities:</h3></ b> <p>$row[powers_abilities]";
+            print "<h3>Description:</h3></ b> $row[description]";
         ?>
 
 
