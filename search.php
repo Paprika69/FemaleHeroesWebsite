@@ -102,7 +102,27 @@
             ==================================================
                 Advanced Search Section Starts Here
             ================================================== -->
+    <?php
+            $host= "localhost";
+		    $username = "femmeheroes";
+		    $password = "code_works";
+		    $database = "femmeheroes";
+		    //create connection to mysql database
+		    $connection = mysqli_connect($host, $username, $password, $database);
+            //get results from database
+            $heroes_query = "SELECT heroes.hero_id, heroes.name FROM heroes";
+            $result = mysqli_query($connection, $heroes_query);
+echo "<select name='heroes'>";
 
+            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                  unset($id, $name);
+                  $id = $row['hero_id'];
+                  $name = $row['name']; 
+                  echo '<option value="'.$id.'">'.$name.'</option>';
+                 );
+            }
+echo "</select>";
+         ?>
 
 
 
