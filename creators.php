@@ -91,7 +91,7 @@
                     <!-- logo -->
                     <div class="navbar-brand">
                         <a href="index.php" >
-                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;" alt="">
+                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:183px; position:relative; top:-15px; left:0px;" alt="">
                         </a>
                     </div>
                     <!-- /logo -->
@@ -119,7 +119,8 @@
         ==================================================
         Table Section Start
         ================================================== -->
-
+<div class="container">
+<h1>Creators</h1>
          <?php
             $host= "localhost";
 		    $username = "femmeheroes";
@@ -133,40 +134,80 @@
             $result = mysqli_query($connection, $creator_query);
             while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                 $values[] = array(
-                'creator_id' => $row['creator_id'],//This is the key that directs you into each hero's page
+                'creator_id' => $row['creator_id'], //This is the key that directs you into each hero's page
                 'first_name' => $row['first_name'],
                 'middle_name' => $row['middle_name'],
                 'last_name' => $row['last_name'],
                 'suffix' => $row['suffix']
                 );
             }
-         ?>
+            
+//create form
+print "<form action='creators.php' method='GET'>";
+//creator search dropdown menu
+print "<select name='creator_id'><option value='Choose'> Select a creator</option>";
+$listresult = mysqli_query($connection, "SELECT creator_id, first_name, last_name FROM creators ORDER BY last_name");
+	while ($row = mysqli_fetch_array($listresult)) {
+		print "<option value='$row[creator_id]'>$row[first_name] $row[last_name]</option>";
+	}
+print "</select>";
+print " <input type='submit' value='Select'>";
+print "</form>";
 
-         <table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-         <thead>
-            <tr>
-                <th>First Name</th>
-                <th>Middle Name</th>
-                <th>Last Name</th>
-                <th>Suffix</th>
-            </tr>
-         </thead>
-         <?php
-             foreach($values as $v) {
+// Display creator info when selected
+if(isset($_GET['creator_id'])) {
+	$creator = $_GET['creator_id'];
+	$cleancreator = preg_replace ("/[^ 0-9a-zA-Z]+/", "", $creator); //sanitize
+	$creatorquery = "SELECT creator_id, first_name, middle_name,
+					last_name, suffix, image
+					FROM creators
+					WHERE creator_id = $cleancreator";
+	$creatorresults = mysqli_query($connection, $creatorquery);
+	$creatorresultsrow = mysqli_fetch_array($creatorresults);
+
+//Display creators table contents
+	print "<h1>$creatorresultsrow[first_name] $creatorresultsrow[middle_name] $creatorresultsrow[last_name] $creatorresultsrow[suffix]</h1>";
+	print "<img src='static/images/$creatorresultsrow[image]'>";
+
+//Join creator and hero tables
+	$creatorheroquery = "SELECT heroes.name AS heroname, heroes.hero_id AS heroid
+					FROM heroes, creators, hero_creator_jnct
+					WHERE heroes.hero_id = hero_creator_jnct.hero_id AND creators.creator_id = $cleancreator AND creators.creator_id = hero_creator_jnct.creator_id
+					ORDER BY heroname";
+	$creatorheroresults = mysqli_query($connection, $creatorheroquery);
+
+	
+	print "<br/><h3>Heroes created:</h3>";
+
+    while ($row = mysqli_fetch_array($creatorheroresults, MYSQLI_ASSOC)) {
+                $values[] = array(
+                'hero_name' => $row['heroname'],//This is the key that directs you into each hero's page
+                'hero_id' => $row['heroid']
+                );
+    }
+
+    foreach($values as $v) {
                  print "
-                 <tr>
-                     <td>".$v['first_name']."</td>
-                     <td>".$v['middle_name']."</td>
-                     <td>".$v['last_name']."</td>
-                     <td>".$v['suffix']."</td>
-                 </tr>
+                    <p><a href='heroes.php?hero_id=$v[hero_id]'>".$v['hero_name']."</a></p>
                  ";
-             }
-             mysqli_close($connection);
+    }
+
+
+
+
+}
+
+else {  // If creator not selected
+	print "<br><p>Please choose a creator from the dropdown menu. </p><br/>";
+	print "<div><img src='static/images/creators.png'></div></ b>";
+}
+
+              mysqli_close($connection);
          ?>
 
-         </table>
-
+    
+           
+</div>
         <!--==================================================-->
         <!--Footer Section Start-->
         <!--================================================== -->
@@ -182,22 +223,6 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="static/js/ie10-viewport-bug-workaround.js"></script>
-
-    <!-- for datatable sorting, show entries and search functions -->
-    <script>
-      $(document).ready(function() {
-        $('#table').DataTable({
-          "order": [[ 0, "asc" ]],
-          "iDisplayLength": 20,
-          "columnDefs": [
-              { "width": "25%", "targets": 0 },
-              { "width": "25%", "targets": 1 },
-              { "width": "25%", "targets": 2 },
-              { "width": "25%", "targets": 3 },
-          ]
-        });
-      });
-    </script>
 
   </body>
 </html>

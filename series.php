@@ -91,7 +91,7 @@
                     <!-- logo -->
                     <div class="navbar-brand">
                         <a href="index.php" >
-                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;" alt="">
+                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:183px; position:relative; top:-15px; left:0px;" alt="">
                         </a>
                     </div>
                     <!-- /logo -->
@@ -119,7 +119,8 @@
         ==================================================
         Table Section Start
         ================================================== -->
-
+<div class="container">
+<h1>Series</h1>
          <?php
             $host= "localhost";
 		    $username = "femmeheroes";
@@ -127,46 +128,71 @@
 		    $database = "femmeheroes";
 		    //create connection to mysql database
 		    $connection = mysqli_connect($host, $username, $password, $database);
-            //get results from database
-            $series_query = "SELECT series.series_id, series.series_title, series.description, series.start_date, series.end_date
-                               FROM series";
-            $result = mysqli_query($connection, $series_query);
-            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            
+//create form
+print "<form action='series.php' method='GET'>";
+//series search dropdown
+print "<select name='series_id'><option value='Choose'> Select a series</option>";
+$listresult = mysqli_query($connection, "SELECT series_id, series_title 
+										 FROM series
+										 ORDER BY series_title");
+	while ($row = mysqli_fetch_array($listresult)) {
+		print "<option value='$row[series_id]'>$row[series_title]</option>";
+	}
+
+print "</select>";
+print " <input type='submit' value='Select'>";
+print "</form>";
+
+// Display series info
+if(isset($_GET['series_id'])) {
+	$series = $_GET['series_id'];
+	$cleanseries = preg_replace ("/[^ 0-9a-zA-Z]+/", "", $series); //sanitize
+	$seriesquery = "SELECT series_id, series_title, description, start_date, end_date
+					FROM series
+					WHERE series_id = $cleanseries";
+	$seriesresults = mysqli_query($connection, $seriesquery);
+	$seriesresultsrow = mysqli_fetch_array($seriesresults);
+
+//Display series table contents
+	print "<h1>$seriesresultsrow[series_title]</h1>";
+	print "<p>$seriesresultsrow[description]<p/><br /><p><b>Start Date:</b> $seriesresultsrow[start_date]</p><br /><p><b>End Date:</b> $seriesresultsrow[end_date]</p>";
+
+//Join series and hero tables
+	$seriesheroquery = "SELECT heroes.hero_id AS heroid, heroes.name AS heroname, heroes.image AS heroimage
+					FROM heroes, series, series_hero_jnct
+					WHERE heroes.hero_id = series_hero_jnct.hero_id AND series.series_id = $cleanseries AND series.series_id = series_hero_jnct.series_id
+					ORDER BY heroname";
+	$seriesheroresults = mysqli_query($connection, $seriesheroquery);
+
+
+	print "<br/><h1>Heroes in series:</h1>";
+
+    while ($row = mysqli_fetch_array($seriesheroresults, MYSQLI_ASSOC)) {
                 $values[] = array(
-                'series_id' => $row['series_id'],//This is the primary key
-                'series_title' => $row['series_title'],
-                'description' => $row['description'],
-                'start_date' => $row['start_date'],
-                'end_date' => $row['end_date']
+                'hero_id' => $row['heroid'],
+                'hero_name' => $row['heroname'],
+                'hero_image' => $row['heroimage']
                 );
-            }
-         ?>
+    }
 
-         <table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-         <thead>
-            <tr>
-                <th>Series Title</th>
-                <th>Desctiption</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-            </tr>
-         </thead>
+    foreach($values as $v) {
+                 print "<p><a href='heroes.php?hero_id=$v[hero_id]'>".$v['hero_name']."</a></p>";
+                 print "<img src='static/images/$v[hero_image]'>";
+    }
+
+	}
+else {  // If series not selected
+	print "<br><p>Please choose a series from the dropdown menu. </p><br/>";
+	print "<div><img src='static/images/hero2.jpg'></div></ b>";
+}
+
+              mysqli_close($connection);
+?>
+
+    
            
-         <?php
-             foreach($values as $v) {
-                 print "
-                 <tr>
-                     <td>".$v['series_title']."</td>
-                     <td>".$v['description']."</td>
-                     <td>".$v['start_date']."</td>
-                     <td>".$v['end_date']."</td>
-                 </tr>
-                 ";
-             }
-             mysqli_close($connection);
-         ?>
-
-         </table>
+</div>
 
         <!--==================================================-->
         <!--Footer Section Start-->
@@ -183,21 +209,5 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="static/js/ie10-viewport-bug-workaround.js"></script>
-
-    <!-- for datatable sorting, show entries and search functions -->
-    <script>
-      $(document).ready(function() {
-        $('#table').DataTable({
-          "order": [[ 0, "asc" ]],
-          "iDisplayLength": 20,
-          "columnDefs": [
-              { "width": "10%", "targets": 0 },
-              { "width": "80%", "targets": 1 },
-              { "width": "5%", "targets": 2 },
-              { "width": "5%", "targets": 3 },
-          ]
-        });
-      });
-    </script>
   </body>
 </html>
