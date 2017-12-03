@@ -26,7 +26,12 @@
     <link href="static/css/owl.theme.css" rel="stylesheet">
     <link href="static/css/jquery.fancybox.css" rel="stylesheet">
 
-
+    <!-- for datatable -->
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <!-- for datatables -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="static/js/ie-emulation-modes-warning.js"></script>
@@ -74,7 +79,7 @@
                     <!-- logo -->
                     <div class="navbar-brand">
                         <a href="index.php" >
-                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;" alt="">
+                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:183px; position:relative; top:-15px; left:0px;" alt="">
                         </a>
                     </div>
                     <!-- /logo -->
@@ -102,9 +107,161 @@
             ==================================================
                 Advanced Search Section Starts Here
             ================================================== -->
+<div class="container">
+<form action="search.php" method="POST">
+
+<?php
+          $host= "localhost";
+          $username = "femmeheroes";
+          $password = "code_works";
+          $database = "femmeheroes";
+          //create connection to mysql database
+          $connection = mysqli_connect($host, $username, $password, $database);
+            //get results from database
+            $heroes_query = "SELECT heroes.hero_id, heroes.name FROM heroes";
+            $heroesresult = mysqli_query($connection, $heroes_query);
+
+echo "<select name='heroes'>";
+
+ while ($row = mysqli_fetch_array($heroesresult, MYSQLI_ASSOC)) {
+                  unset($id, $name);
+                  $id = $row['hero_id'];
+                  $name = $row['name']; 
+                  echo '<option value="'.$id.'">'.$name.'</option>';
+                 
+            }
+           
+echo "</select>";
+
+//dropdown series
+
+$series_query = "SELECT series.series_id, series.series_title FROM series";
+            $seriesresult = mysqli_query($connection, $series_query);
+
+echo "<select name='series'>";
+
+ while ($seriesrow = mysqli_fetch_array($seriesresult, MYSQLI_ASSOC)) {
+                  unset($seriesid, $seriestitle);
+                  $seriesid = $seriesrow['series_id'];
+                  $seriestitle = $seriesrow['series_title']; 
+                  echo '<option value="'.$seriesid.'">'.$seriestitle.'</option>';
+                 
+            }
+           
+echo "</select>";
+
+//dropdown creator
+
+$creators_query = "SELECT creators.creator_id, concat(creators.last_name, ', ', creators.first_name) as creator FROM creators;";
+            $creatorsresult = mysqli_query($connection, $creators_query);
+
+echo "<select name='creators'>";
+
+ while ($creatorsrow = mysqli_fetch_array($creatorsresult, MYSQLI_ASSOC)) {
+                  unset($creatorsid, $creatorsname);
+                  $creatorsid = $creatorsrow['creator_id'];
+                  $creatorsname = $creatorsrow['creator']; 
+                  echo '<option value="'.$creatorsid.'">'.$creatorsname.'</option>';
+                 
+            }
+           
+echo "</select>";
+
+         ?>
+
+<input type="submit" name="submit">
+
+
+<?php
+
+if (isset($_POST)) {
+
+$qry = "SELECT heroes.hero_id, heroes.name, series.series_title as series, concat(creators.first_name, ', ', creators.last_name) AS creator FROM heroes 
+INNER JOIN hero_creator_jnct  ON heroes.hero_id = hero_creator_jnct.hero_id
+INNER JOIN creators ON hero_creator_jnct .creator_id = creators.creator_id
+INNER JOIN series_hero_jnct ON heroes.hero_id = series_hero_jnct.hero_id
+INNER JOIN series ON series_hero_jnct.series_id = series.series_id";
+
+
+$hid=$_POST['heroes'];
+$sid=$_POST['series'];
+$cid=$_POST['creators'];
+
+$condition = '';
+
+if($hid  != ''){
+  $condition = " heroes.hero_id = " . $hid;
+}
+
+
+if($sid  != ''){
+  if ($condition != ''){
+    $condition = $condition . " AND series.series_id = " . $sid;
+  }
+  else {
+    $condition = " series.series_id = " . $sid;
+  }
+}
+
+  if($cid  != ''){
+  if ($condition != ''){
+    $condition = $condition . " AND creators.creator_id = " . $cid;
+  }
+  else {
+    $condition = " creators.creator_id = " . $cid;
+  }
+  }
+
+if ($condition != ''){
+  $qry = $qry . " WHERE " . $condition;
+}
+
+
+         echo '<table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+         <thead>
+            <tr>
+                <th>Name</th>
+                <th>Series</th>
+                <th>Creator</th>
+            </tr>
+         </thead>';
+
+
+            $result = mysqli_query($connection, $qry);
+            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                $values[] = array(
+                'hero_id' => $row['hero_id'],//This is the key that directs you into each hero's page
+                'name' => $row['name'],
+                'series' => $row['series'],
+                'creator' => $row['creator']
+                );
+            }
+
+             foreach($values as $v) {
+                 print "
+                 <tr>
+                     <td><a href='heroes.php?hero_id=$v[hero_id]'>".$v['name']."</a></td>
+                     <td>".$v['series']."</td>
+                     <td>".$v['creator']."</td>
+                 </tr>
+                 ";
+             }
+             mysqli_close($connection);
+
+
+         echo "</table>";
+
+
+}
+
+
+?>
 
 
 
+</form>
+
+</div>
 
 
       <!--
@@ -125,5 +282,6 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="static/js/ie10-viewport-bug-workaround.js"></script>
+
   </body>
 </html>
