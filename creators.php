@@ -91,7 +91,7 @@
                     <!-- logo -->
                     <div class="navbar-brand">
                         <a href="index.php" >
-                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:183px; position:relative; top:-15px; left:0px;" alt="">
+                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:160px; position:relative; top:-15px; left:0px;" alt="">
                         </a>
                     </div>
                     <!-- /logo -->
@@ -167,7 +167,7 @@ if(isset($_GET['creator_id'])) {
 
 //Display creators table contents
 	print "<h1>$creatorresultsrow[first_name] $creatorresultsrow[middle_name] $creatorresultsrow[last_name] $creatorresultsrow[suffix]</h1>";
-	print "<img src='static/images/$creatorresultsrow[image]'>";
+	print "<img src='static/images/$creatorresultsrow[image]' style='float: left; padding:20px' width='30%'>";
 
 //Join creator and hero tables
 	$creatorheroquery = "SELECT heroes.name AS heroname, heroes.hero_id AS heroid
@@ -177,7 +177,7 @@ if(isset($_GET['creator_id'])) {
 	$creatorheroresults = mysqli_query($connection, $creatorheroquery);
 
 	
-	print "<br/><h3>Heroes created:</h3>";
+	print "<br/><h2>Heroes created:</h2>";
 
     while ($row = mysqli_fetch_array($creatorheroresults, MYSQLI_ASSOC)) {
                 $values[] = array(

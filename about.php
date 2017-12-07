@@ -73,7 +73,7 @@
                     <!-- logo -->
                     <div class="navbar-brand">
                         <a href="index.php" >
-                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;" alt="">
+                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:160px; position:relative; top:-15px; left:0px;" alt="">
                         </a>
                     </div>
                     <!-- /logo -->
@@ -131,13 +131,13 @@
         <div class="container">
           <div class="row">
             <div class="col-md-6 wow fadeInLeft" data-wow-delay=".3s" >
-              <img src="../static/images/team.jpg" alt="" class="img-responsive">
+              <img src="static/images/Codeworkslogo3.png" alt="" class="img-responsive">
             </div>
             <div class="col-md-6">
               <div class="block">
                 <h3 class="subtitle wow fadeInUp" data-wow-delay=".3s" data-wow-duration="500ms">Why We are Different</h3>
                 <p  class="wow fadeInUp" data-wow-delay=".5s" data-wow-duration="500ms">
-                  We are four second-year graduate students from the School of Information.
+                  We are four second-year graduate students from the School of Information at the University of Texas. We wanted to make a database that focused on the the unsung heroes of Marvel, the female heroes. This is our first attempt at creating a database/website with MySQL and PHP. We hope you enjoy!
                 <!--<p  class="wow fadeInUp" data-wow-delay=".7s" data-wow-duration="500ms">-->
 
 
@@ -162,7 +162,7 @@
                 <div class="col-md-4">
                   <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".3s">
                     <div class="team-img">
-                      <img src="static/images/joy.jpg" class="img-responsive" alt="">
+                      <img src="static/images/joy.jpg" class="img-responsive" style="height:200px;width:200px; alt="">
                     </div>
                 <h3 class="team_name">Qiuying Jiang</h3>
                 <p class="team_designation">Front-end Development</p>
@@ -173,7 +173,7 @@
             <div class="col-md-4">
               <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".5s">
                 <div class="team-img">
-                  <img src="static/images/mitch.jpg" class="img-responsive" alt="">
+                  <img src="static/images/ScarletMitch.PNG" class="img-responsive" style="height:200px;width:165px; alt="">
                 </div>
                 <h3 class="team_name">Mitch Cota</h3>
                 <p class="team_designation">Database Administration</p>
@@ -183,10 +183,10 @@
             <div class="col-md-4">
               <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".7s">
                 <div class="team-img">
-                  <img src="static/images/WonderWoman.png" class="img-responsive" alt="">
+                  <img src="static/images/WonderWoman.png" class="img-responsive" style="height:200px;width:200px; alt="">
                 </div>
                 <h3 class="team_name">Elle Covington</h3>
-                <p class="team_designation">...</p>
+                <p class="team_designation">Design & Structure, Fearlesss Leader</p>
               </div>
             </div>
                 </div>
@@ -195,10 +195,10 @@
             <div class="col-md-4">
               <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".9s">
                 <div class="team-img">
-                  <img src="static/images/KamalaKhan.png" class="img-responsive" alt="">
+                  <img src="static/images/KamalaKhan.png" class="img-responsive" style="height:200px;width:200px; alt="">
                 </div>
                 <h3 class="team_name">Rajashree Kamat</h3>
-                <p class="team_designation">...</p>
+                <p class="team_designation">Coder Extraordinaire & All Around PHP Wizard</p>
 
               </div>
             </div>
@@ -216,7 +216,7 @@
       <footer id="footer">
       <div class="container">
           <div class="col-md-6">
-              <p class="copyright">Copyright: <span>2017</span> . Design and Developed by Code Works</p>
+              <p class="copyright">Copyright: <span>2017</span> . Designed and Developed by Code Works</p>
           </div>
       </div>
   </footer> <!-- /#footer -->

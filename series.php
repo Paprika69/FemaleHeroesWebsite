@@ -91,7 +91,7 @@
                     <!-- logo -->
                     <div class="navbar-brand">
                         <a href="index.php" >
-                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:183px; position:relative; top:-15px; left:0px;" alt="">
+                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:160px; position:relative; top:-15px; left:0px;" alt="">
                         </a>
                     </div>
                     <!-- /logo -->
@@ -156,7 +156,17 @@ if(isset($_GET['series_id'])) {
 
 //Display series table contents
 	print "<h1>$seriesresultsrow[series_title]</h1>";
-	print "<p>$seriesresultsrow[description]<p/><br /><p><b>Start Date:</b> $seriesresultsrow[start_date]</p><br /><p><b>End Date:</b> $seriesresultsrow[end_date]</p>";
+	print "<p>$seriesresultsrow[description]<p/>
+	<table cellspacing='0' width='100%'>
+            <tr>
+                <td><h3>Start Date</h3></td>
+                <td><h3>End Date</h3></td>
+            </tr>
+         	<tr><td>$seriesresultsrow[start_date]</td>
+            			<td>$seriesresultsrow[end_date]</td>
+            			</tr></table><br />
+            			";
+
 
 //Join series and hero tables
 	$seriesheroquery = "SELECT heroes.hero_id AS heroid, heroes.name AS heroname, heroes.image AS heroimage
@@ -166,7 +176,7 @@ if(isset($_GET['series_id'])) {
 	$seriesheroresults = mysqli_query($connection, $seriesheroquery);
 
 
-	print "<br/><h1>Heroes in series:</h1>";
+	print "<h2 style='padding-top: 20px'>Heroes in series:</h2>";
 
     while ($row = mysqli_fetch_array($seriesheroresults, MYSQLI_ASSOC)) {
                 $values[] = array(
@@ -175,16 +185,14 @@ if(isset($_GET['series_id'])) {
                 'hero_image' => $row['heroimage']
                 );
     }
-
     foreach($values as $v) {
-                 print "<p><a href='heroes.php?hero_id=$v[hero_id]'>".$v['hero_name']."</a></p>";
-                 print "<img src='static/images/$v[hero_image]'>";
+                 print "<div style='float: left' width='50%'><h4><a href='heroes.php?hero_id=$v[hero_id]'>".$v['hero_name']."</a></h4>";
+                 print "<img src='static/images/$v[hero_image]' style='float: left padding=20px' width='80%'></div>";
     }
-
 	}
 else {  // If series not selected
 	print "<br><p>Please choose a series from the dropdown menu. </p><br/>";
-	print "<div><img src='static/images/hero2.jpg'></div></ b>";
+	print "<div><img src='static/images/hero2.jpg' width='75%'></div></ b>";
 }
 
               mysqli_close($connection);
@@ -200,7 +208,7 @@ else {  // If series not selected
     <footer id="footer">
         <div class="container">
             <div class="col-md-6">
-            <p class="copyright">Copyright: <span>2017</span> . Design and Developed by Code Works</p>
+            <p class="copyright">Copyright: <span>2017</span> . Designed and Developed by Code Works</p>
             </div>
         </div>
     </footer> <!-- /#footer -->

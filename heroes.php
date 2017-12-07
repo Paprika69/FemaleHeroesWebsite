@@ -91,7 +91,7 @@
                     <!-- logo -->
                     <div class="navbar-brand">
                         <a href="index.php" >
-                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:240px; position:relative; top:-15px; left:0px;" alt="">
+                            <img src="static/images/Codeworkslogo3.png" style="height:54px;width:160px; position:relative; top:-15px; left:0px;" alt="">
                         </a>
                     </div>
                     <!-- /logo -->
@@ -155,12 +155,20 @@ if(isset($_GET['hero_id'])) {
   $heroresultsrow = mysqli_fetch_array($heroresults);
 
 //Display heroes table contents
-  print "<img src='static/images/$heroresultsrow[image]'>";
-            print "<h3>Name:</h3></ b> $heroresultsrow[name]";
-            print "<h3>Real Name:</h3></ b> $heroresultsrow[real_name]";
-            print "<h3>Height:</h3></ b> $heroresultsrow[height] <h3>Weight:</h3></ b> $heroresultsrow[weight]";
-            print "<h3>Battle Rating:</h3></ b> $heroresultsrow[battle_rating] out of 7";
-            print "<h3>Powers & Abilities:</h3></ b> <p>$heroresultsrow[powers_abilities]";
+            print "<h2>$heroresultsrow[name]</h2>";
+            print "<img src='static/images/$heroresultsrow[image]' style='float: left; padding:20px' width='30%'>";
+            print "<table id='table' style='float: left' cellspacing='0' width='70%'>
+            <tr>
+                <th><h3>Real Name</h3></th>
+                <th><h3>Height</h3></th>
+                <th><h3>Weight</h3></th>
+                <th><h3>Battle Rating</h3></th>
+            </tr>
+         	<tr><td>$heroresultsrow[real_name]</td>
+            			<td>$heroresultsrow[height]</td>
+            			<td>$heroresultsrow[weight]</td>
+            			<td>$heroresultsrow[battle_rating] out of 7</td></tr></table><br />";
+            print "<br /><br /><h3 style='padding-top: 20px'>Powers & Abilities:</h3></ b> <p>$heroresultsrow[powers_abilities]";
             print "<h3>Description:</h3></ b> $heroresultsrow[description]";
 
 
@@ -172,7 +180,7 @@ if(isset($_GET['hero_id'])) {
   $herocreatorresults = mysqli_query($connection, $herocreatorquery);
 
 
-  print "<h1>Creator</h1>";
+  print "<h2>Creator</h2>";
 
 //this is what allows each hero to show multiple creators on one page
 
@@ -203,7 +211,7 @@ if(isset($_GET['hero_id'])) {
   $heroseriesresults = mysqli_query($connection, $heroseriesquery);
 
 
-  print "<h1>Starring in these Series</h1>";
+  print "<h2>Starring in these Series</h2>";
 
   while ($row = mysqli_fetch_array($heroseriesresults, MYSQLI_ASSOC)) {
                 $results[] = array(
@@ -222,7 +230,7 @@ if(isset($_GET['hero_id'])) {
 
 else {  // If hero not selected
   print "<br><p>Please choose a Superhero from the dropdown menu. </p><br/>";
-  print "<div><img src='static/images/hero.jpg'></div></ b>";
+  print "<div class=\"container\"><img src='static/images/hero.jpg' style=\"width:65%\"></div></ b>";
 }
 
               mysqli_close($connection);
